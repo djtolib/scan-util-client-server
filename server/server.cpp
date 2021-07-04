@@ -42,8 +42,6 @@ string server::scan_dir(const string& dir) {
         }// end of not directory if
     }// end of for
 
-    // Special emulation
-    sleep(2);
 
     auto end = chrono::high_resolution_clock::now();
 
