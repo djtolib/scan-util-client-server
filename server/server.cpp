@@ -81,6 +81,7 @@ void server::run() {
     addr.sin_port = htons(3425);
     addr.sin_addr.s_addr = htonl(INADDR_ANY);
     if(bind(listener, (struct sockaddr *)&addr, sizeof(addr)) < 0){
+        close(listener);
         throw runtime_error("Unable to bind.");
     }
     cout<<"== Scan service is started =="<<endl;
