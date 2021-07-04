@@ -6,6 +6,7 @@ string server::scan_dir(const string& dir) {
     auto begin = chrono::high_resolution_clock::now();
     stringstream out;
     filesystem::path path(dir);
+
     if(!is_directory(path)){
         out<<"Directory is not exists."<<endl;
         return out.str();
