@@ -12,7 +12,6 @@ int main(int argc, char* argv[])
     int sock;
     struct sockaddr_in addr;
 
-//    char message[] = "Hello there!\n";
     char buf[1024];
 
     sock = socket(AF_INET, SOCK_STREAM, 0);
