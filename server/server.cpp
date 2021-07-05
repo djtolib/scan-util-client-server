@@ -14,10 +14,11 @@ string server::scan_dir(const string& dir) {
 
     ifstream file;
     string line;
-    int unix_suspicious = 0, js_suspicious = 0, mac_suspicious = 0, errors = 0;
+    int unix_suspicious = 0, js_suspicious = 0, mac_suspicious = 0, errors = 0, total_count = 0;
 
     for(auto &p : filesystem::directory_iterator(path)) {
         if (!p.is_directory()) {
+            ++total_count;
             file.open(p.path(), ios_base::in);
             if (file.is_open()) {
                 while (getline(file, line)) {
@@ -52,7 +53,7 @@ string server::scan_dir(const string& dir) {
 
     // Outputting
     out<<"====== Scan result ======"<<endl
-        <<"Processed files: "<< unix_suspicious + mac_suspicious + js_suspicious + errors <<endl
+        <<"Processed files: "<< total_count <<endl
         <<"JS detects: "<<js_suspicious<<endl
         <<"Unix detects: "<<unix_suspicious<<endl
         <<"macOS detects: "<<mac_suspicious<<endl
@@ -97,7 +98,6 @@ void server::run() {
         bytes_read = recv(sock, buf, 1024, 0);
         dir += buf;
         dir = dir.substr(0, dir.find('\r'));
-        //if(dir.back() == '\r') dir.pop_back();
 
         result = scan_dir(dir);
         send(sock, result.c_str(), result.size(), 0);
